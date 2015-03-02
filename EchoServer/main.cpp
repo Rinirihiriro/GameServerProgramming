@@ -17,7 +17,9 @@ void OnRead(SOCKET sock);
 void OnClose(SOCKET sock);
 
 HWND InitWindow(HINSTANCE hInstnace);
+void CleanupWindow();
 SOCKET InitServerSocket(HWND hWnd);
+void CleanupServerSocket(SOCKET serverSock);
 
 int WINAPI WinMain(HINSTANCE hInstnace, HINSTANCE, LPSTR lpCmdLine, int nShowCmd)
 {
@@ -27,7 +29,12 @@ int WINAPI WinMain(HINSTANCE hInstnace, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 
 	SOCKET serverSock = InitServerSocket(hWnd);
 	if (serverSock == INVALID_SOCKET)
+	{
+		CleanupWindow();
 		return -1;
+	}
+
+	printf("Echo Server ON\n");
 
 	MSG msg;
 	while (GetMessage(&msg, hWnd, 0, 0))
@@ -36,9 +43,8 @@ int WINAPI WinMain(HINSTANCE hInstnace, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		DispatchMessage(&msg);
 	}
 
-	closesocket(serverSock);
-	WSACleanup();
-	FreeConsole();
+	CleanupServerSocket(serverSock);
+	CleanupWindow();
 
 	return 0;
 }
@@ -51,7 +57,6 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_CREATE:
-		printf("Hello World\n");
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -163,15 +168,26 @@ HWND InitWindow(HINSTANCE hInstnace)
 	return hWnd;
 }
 
+void CleanupWindow()
+{
+	FreeConsole();
+}
+
 SOCKET InitServerSocket(HWND hWnd)
 {
 	WSAData wsadata;
 	if (WSAStartup(MAKEWORD(2, 2), &wsadata) != NO_ERROR)
+	{
+		printf("WSAStartup Error\n");
 		return INVALID_SOCKET;
+	}
 	
 	SOCKET serverSock = socket(AF_INET, SOCK_STREAM, 0);
 	if (serverSock == INVALID_SOCKET)
+	{
+		printf("Socket Error\n");
 		return INVALID_SOCKET;
+	}
 
 	sockaddr_in addr = { 0, };
 	addr.sin_family = PF_INET;
@@ -179,21 +195,30 @@ SOCKET InitServerSocket(HWND hWnd)
 	addr.sin_addr.s_addr = ADDR_ANY;
 	if (bind(serverSock, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR)
 	{
+		printf("Bind Error\n");
 		closesocket(serverSock);
 		return INVALID_SOCKET;
 	}
 
 	if (listen(serverSock, SOMAXCONN) == SOCKET_ERROR)
 	{
+		printf("Listen Error\n");
 		closesocket(serverSock);
 		return INVALID_SOCKET;
 	}
 
 	if (WSAAsyncSelect(serverSock, hWnd, WM_NETWORK, FD_ACCEPT) != NO_ERROR)
 	{
+		printf("WSAAsyncSelect Error\n");
 		closesocket(serverSock);
 		return INVALID_SOCKET;
 	}
 
 	return serverSock;
+}
+
+void CleanupServerSocket(SOCKET serverSock)
+{
+	closesocket(serverSock);
+	WSACleanup();
 }
