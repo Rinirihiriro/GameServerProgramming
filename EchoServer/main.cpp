@@ -9,7 +9,7 @@
 #define CLASS_NAME "EchoServer"
 #define WM_NETWORK (WM_USER + 1)
 #define BUF_SIZE 1024
-
+#define PORT 9001
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void OnAccept(SOCKET sock, HWND hWnd);
@@ -18,7 +18,7 @@ void OnClose(SOCKET sock);
 
 HWND InitWindow(HINSTANCE hInstnace);
 void CleanupWindow();
-SOCKET InitServerSocket(HWND hWnd);
+SOCKET InitServerSocket(HWND hWnd, unsigned short port);
 void CleanupServerSocket(SOCKET serverSock);
 
 int WINAPI WinMain(HINSTANCE hInstnace, HINSTANCE, LPSTR lpCmdLine, int nShowCmd)
@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstnace, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	if (!hWnd)
 		return -1;
 
-	SOCKET serverSock = InitServerSocket(hWnd);
+	SOCKET serverSock = InitServerSocket(hWnd, PORT);
 	if (serverSock == INVALID_SOCKET)
 	{
 		CleanupWindow();
@@ -173,7 +173,7 @@ void CleanupWindow()
 	FreeConsole();
 }
 
-SOCKET InitServerSocket(HWND hWnd)
+SOCKET InitServerSocket(HWND hWnd, unsigned short port)
 {
 	WSAData wsadata;
 	if (WSAStartup(MAKEWORD(2, 2), &wsadata) != NO_ERROR)
@@ -191,7 +191,7 @@ SOCKET InitServerSocket(HWND hWnd)
 
 	sockaddr_in addr = { 0, };
 	addr.sin_family = PF_INET;
-	addr.sin_port = htons(9001);
+	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = ADDR_ANY;
 	if (bind(serverSock, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR)
 	{
