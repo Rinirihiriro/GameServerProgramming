@@ -11,6 +11,9 @@
 #define BUF_SIZE 1024
 #define PORT 9001
 
+//
+//
+
 LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void OnAccept(SOCKET sock, HWND hWnd);
 void OnRead(SOCKET sock);
@@ -18,8 +21,12 @@ void OnClose(SOCKET sock);
 
 HWND InitWindow(HINSTANCE hInstnace);
 void CleanupWindow();
+
 SOCKET InitServerSocket(HWND hWnd, unsigned short port);
 void CleanupServerSocket(SOCKET serverSock);
+
+//
+//
 
 int WINAPI WinMain(HINSTANCE hInstnace, HINSTANCE, LPSTR lpCmdLine, int nShowCmd)
 {
