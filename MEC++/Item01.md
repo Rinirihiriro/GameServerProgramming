@@ -11,10 +11,9 @@ template<typename T>
 void f(ParamType param);
 ```
 
-그리고 이 함수를 `f(expr)`처럼 부를 수 있다.<br/>
-컴파일러는 `expr`을 사용해 `T`와 `ParamType`을 추론한다.<br/>
-여기서 `ParamType`은 `const`나 참조 한정자 등을 쓸 수 있기 때문에,<br/>
-많은 경우에 추론된 두 타입의 결과가 다르다.
+그리고 이 함수를 `f(expr)`처럼 부를 수 있다.
+컴파일러는 `expr`을 사용해 `T`와 `ParamType`을 추론한다.
+여기서 `ParamType`은 `const`나 참조 한정자 등을 쓸 수 있기 때문에 많은 경우에 추론된 두 타입의 결과가 다르다.
 
 예컨대 이렇게 함수 템플릿이 정의되어있고,
 ```C++
@@ -119,6 +118,8 @@ f(rx);          // void f<int>(int)
   - 원본이 const라고 복사본이 const일 이유는 없으니까...
   - 어차피 원본은 보존되고...
 
+----------
+
 ```C++
 template<typename T>
 void f(T param);
@@ -147,6 +148,8 @@ f(arr);         // void f<const char*>(const char*)
 ```
 * 값 전달의 경우 배열을 파라미터로 받는 방법이 없기 때문에 포인터로 decay된다.
 
+----------
+
 ```C++
 template<typename T>
 void f(T& param);
@@ -156,6 +159,8 @@ const char arr[] = "String";
 f(arr);         // void f<const char[7]>(const char (&)[7])
 ```
 * 참조형의 경우 배열의 참조형이 존재하기 때문에 배열의 참조형으로 받는다.
+
+----------
 
 ```C++
 template<typename T, std::size_t N>
