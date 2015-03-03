@@ -1,4 +1,4 @@
-Item02: `auto` 타입 추론을 이해해라. (Understand `auto` type deduction.)
+Item 2: `auto` 타입 추론을 이해하라.
 ===
 - `auto` 타입 추론은 템플릿 타입 추론과 완전히 동일하다.
   - 템플릿 타입 추론은 인수(Argument) `expr`을 가지고 타입 매개변수 `T`와 파라미터 타입 `ParamType`을 추론해낸다.
