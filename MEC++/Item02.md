@@ -30,6 +30,8 @@ auto y4{ 27 };    // std::initializer_list<int>
   - `auto`가 `std::initializer_list`로 추론되면 `std::initializer_list` 역시 템플릿이기에 템플릿 타입 추론이 한 번 더 일어난다.
     - 이 때는 중괄호 안의 모든 원소를 사용해서 추론한다. 하나라도 타입이 다른 원소가 있다면 추론에 실패한다.
 
+----------
+
 ```C++
 auto x = { 1, 2, 3 };  // std::initializer_list<int>
 
@@ -45,6 +47,8 @@ f2({1, 2, 3});         // void f2<int>(std::initializer_list<int>)
 ```
 * `std::initializer_list`로의 추론은 `auto`인 경우에만 적용된다. 템플릿 타입 추론에서는 먹히지 않는다!
   - 템플릿에서 사용할 시 `std::initializer_list`를 반드시 명시해주어야한다.
+
+----------
 
 ```C++
 auto f()
