@@ -1,4 +1,4 @@
-Item 1: 템플릿 타입 추론을 이해하라. (Understand template type deduction.)
+Item 1: 템플릿 타입 추론을 이해하라.
 ===
 
 함수 템플릿은 다음처럼 생각할 수 있다.
