@@ -25,7 +25,8 @@ TD<decltype(f)> fType;
 ```
 g++에서는 에러 메시지가 이렇게 나온다.
 ```
-error: aggregate 'TD<const int* const> xType' has incomplete type and cannot be defined                                                                                      error: aggregate 'TD<int(const int&)> fType' has incomplete type and cannot be defined                                                                                      
+error: aggregate 'TD<const int* const> xType' has incomplete type and cannot be defined
+error: aggregate 'TD<int(const int&)> fType' has incomplete type and cannot be defined                                                                                      
 ```
 
 
@@ -33,13 +34,9 @@ error: aggregate 'TD<const int* const> xType' has incomplete type and cannot be 
 ---
 런타임까지는 타입을 알 수 없지만, 출력 포맷을 마음대로 지정할 수 있다는 장점이 있다.
 
-C++에서 기본적으로 지원해주는 방식은 `typeid` 키워드와 `std::type_info` 객체이다.
-
+C++에서 기본적으로 지원해주는 방식은 `typeid` 키워드와 `std::type_info` 객체다.
 ```C++
-struct MyStruct
-{
-};
-
+struct MyStruct {};
 class MyClass;
 
 int num = 10;
@@ -97,7 +94,7 @@ int
 ```
 * `typeid`를 쓰면 타입의 참조성과 `const`, `volatile` 모두 사라진다.
   * `typeid(consr int&)`처럼 타입 자체를 넣어주는 경우도 마찬가지.
-  * `const char*`은 괜찮았는데!? 라고 생각할 수도 있겠지만 포인터가 가리키는 타입의 상수성은 포인터의 상수성과 관련 없다는 것을 상기하자.
+  * `const char*`은 괜찮았는데!? 라고 생각할 수도 있겠지만 포인터가 가리키는 타입의 상수성은 포인터 자체의 상수성과 상관 없다는 것을 상기하자.
 
 ----------
 
