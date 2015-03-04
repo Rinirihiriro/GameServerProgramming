@@ -78,6 +78,7 @@ decltype(auto) myX2 = x;  // myX2 is const int&
 ----------
 
 > `first` 템플릿 함수는 rvalue를 받을 수 없는데, rvalue를 받을 수 있도록 온전하게 구현한 코드는 다음과 같다.
+
 ```C++
 // C++11
 template<typename Cont>
