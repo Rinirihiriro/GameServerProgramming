@@ -8,6 +8,23 @@ Item 4: 추론된 타입을 보는 법을 알아라.
 
 ![](https://c2.staticflickr.com/4/3457/3868299211_55eda5cf1a.jpg)
 
+다만 너무 복잡한 타입의 경우에는 `const
+std::_Simple_types<std::_Wrap_alloc<std::_Vec_base_types<int,
+std::allocator<int>>::_Alloc>::value_type>::value_type *`처럼 답이 안 나오는 상황이 벌어지므로 다음 방법들도 알아두자.<br/>
+참고로 위 타입은 `const int *`이다.<br/>
+직접 보고싶다면 다음 코드를 친 다음 `f` 위에 마우스를 올리면 된다. T에 해당하는 부분이 위의 내용으로 채워져 있을 것이다.
+```C++
+template<typename T>
+void f(const T& param);
+
+int main()
+{
+	const std::vector<int> vw;
+	f(&vw[0]);
+	return 0;
+}
+```
+
 2. 컴파일 중에 보는 법: 컴파일러 진단
 ---
 컴파일 에러를 내서, 에러 메시지를 통해 타입을 알아내는 방식이다.
