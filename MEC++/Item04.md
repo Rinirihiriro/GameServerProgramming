@@ -44,7 +44,7 @@ TD<decltype(f)> fType;
 g++에서는 에러 메시지가 이렇게 나온다.
 ```
 error: aggregate 'TD<const int* const> xType' has incomplete type and cannot be defined
-error: aggregate 'TD<int(const int&)> fType' has incomplete type and cannot be defined                                                                                      
+error: aggregate 'TD<int(const int&)> fType' has incomplete type and cannot be defined
 ```
 
 
@@ -86,7 +86,6 @@ char const *
 struct MyStruct
 class MyClass *
 ```
-훨씬 낫다.
 
 하지만 이 방식에는 치명적인 문제가 있다.
 ```C++
