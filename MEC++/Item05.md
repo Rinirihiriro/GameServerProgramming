@@ -36,7 +36,7 @@ int x = { 10 };
 auto y = { 10 };  // std::initializer_list<int>
 ```
 
-#### Item 6. 원하는 타입으로 추론되지 않는 경우
+#### Item 6. 원하는 타입으로 추론되지 않는 경우 (보이지 않는 프록시 객체)
 ```C++
 float x = 10.0;
 auto y = 10.0;    // double
