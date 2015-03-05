@@ -24,8 +24,9 @@ auto power_of_2 = std::bind(pow, 2, std::placeholders::_1);
 ### 유추하기 힘든 함수의 반환형
 ```C++
 std::map<std::string, int> m;
-for (const std::pair<std::string, int>& p : m); // const std::pair<const std::string, int>&가 정확한 반환 타입이다.
-// m의 원소가 복사되어 임시 객체가 만들어지고, 그 임시객체를 p가 참조하게 된다.
+for (const std::pair<std::string, int>& p : m);
+// const std::pair<const std::string, int>&가 정확한 반환 타입이다.
+// m의 원소가 복사되어 임시 객체가 만들어지고, 그 임시객체를 p가 참조하면서 문제가 생긴다.
 for (const auto& p : m);
 ```
 
