@@ -41,6 +41,6 @@ auto y = { 10 };  // std::initializer_list<int>
 float x = 10.0;
 auto y = 10.0;    // double
 
-std::vector<int> f();
-auto z = f()[0];  // std::vector<int>::reference
+std::vector<bool> f();
+auto z = f()[0];  // std::vector<bool>::reference
 ```
